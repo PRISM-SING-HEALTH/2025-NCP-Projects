@@ -2,87 +2,44 @@
 This repository holds 5 different projects, each designed to tackle a different healthcare-related problem using different technologies and approaches.
 
 ## 1. Variant Database
-
 ### Overview
-The Variant Database project focuses on developing a **stand-alone application** for managing, querying, and validating genetic variant data. The application is designed to run on **Windows laptops** with Python packaging.
-### Project Students
-- Angelo Lagahit (https://www.linkedin.com/in/angelo-lagahit/)
-- Sze Wei Shong (https://www.linkedin.com/in/sze-wei-shong/)
-
+A stand-alone Windows application for managing, querying, and validating genetic variant data using Python packaging.
 ### Key Features
+- Data Management: Integrates multiple sources, maintains privacy, and optimises distributed storage.
+- Querying & Filtering: Multi-level filtering by gene, phenotype, variant type, and solved status.
+- Export & Validation: Supports data export and validation via VariantValidator.org.
+- HPO Annotation: Incorporates Human Phenotype Ontology (HPO) for annotating phenotypic descriptions using FastHPOCR.
+### Project Students
+- [Angelo Lagahit](https://www.linkedin.com/in/angelo-lagahit/)
+- [Sze Wei Shong](https://www.linkedin.com/in/sze-wei-shong/)
 
-#### 1. **Data Management**
-- Harmonisation and Consolidation: Integrates variant data from multiple sources.
-- Privacy Maintenance: Enables distributed access while ensuring privacy.
-- Smart Distributed Storage: Efficiently manages data across three "disk locations."
-
-#### 2. **Querying and Filtering**
-- Layered Filtering:
-  - Level 1: Filters by gene, phenotype, variant type, and solved status.
-  - Level 2: Filters based on variant-specific information.
-- Integrated Querying: Provides seamless access to relevant data.
-
-#### 3. **Export and Validation**
-- Enables results export.
-- Validates exported data against external services such as VariantValidator.org
-
-#### 4. **HPO Annotation**
-- Integrates Gabrielle's work on Human Phenotype Ontology (HPO) for annotating free-text phenotypic descriptions.
-
-### Specifications
-- Windows-compatible stand-alone app.
-- Python-based packaging.
-- Manages data across multiple disk locations with distributed storage.
-- Supports variant checking outside the network.
-
-## 2. Project Title
-
+## 2. Agentic Framework for Tracking Medical Knowledge on Bronchopulmonary Dysplasia in Preterm Infants
 ### Overview
+### Key Features
 ### Project Student
 - Thoraya Al Sabti
 
-### Key Features
-
-### Specifications
-
-## 3. Project Title
-
+## 3. Small Large-Language Models for Rare Disease Diagnosis
 ### Overview
+### Key Features
 ### Project Student
 - Elicia Yii
 
-### Key Features
-
-### Specifications
-
-## 4. Project Title
-
+## 4. 3D Visualisation of Anatomic Structures for Clinical Diagnosis and Preoperative Planning: Semi-Automatic Segmentation of Congenital Heart Disease Case
 ### Overview
+### Key Features
 ### Project Student
 - Lucy Boulos
 
-### Key Features
-
-### Specifications
-
-## 5. Project Title
-
+## 5. 3D Visualisation of Anatomic Structures for Clinical Diagnosis and Preoperative Planning: Annotation for Training Anatomy
 ### Overview
+### Key Features
 ### Project Student
 - Jade Woods
 
-### Key Features
-
-### Specifications
-
-## 6. Project Title
-
+## 6. Epidemiological Backcasting and Forecasting of Speech Pathologists and Radiotherapists
 ### Overview
+### Key Features
 ### Project Student
 - Atharva Dengle
 - Claire Yap
-
-### Key Features
-
-### Specifications
-

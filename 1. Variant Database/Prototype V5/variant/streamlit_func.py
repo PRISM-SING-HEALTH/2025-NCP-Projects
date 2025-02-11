@@ -109,6 +109,10 @@ def extract_hpo_terms(df, phenotype_column):
 
     # Apply HPO extraction to the Phenotype column
     df["HPO Terms"] = df[phenotype_column].apply(get_hpo_terms)
+    
+    # Convert HPO Terms to a vertical list (newline-separated)
+    df["HPO Terms"] = df["HPO Terms"].apply(lambda x: "\n".join(x.split(", ")) if isinstance(x, str) else x)
+
 
     return df
 
@@ -145,10 +149,10 @@ def load_variant_data(config, base_path):
 
             # Extract HPO terms from Phenotype columns
             lab_cases_df = extract_hpo_terms(lab_cases_df, "Phenotype")
-            invitae_summary_df = extract_hpo_terms(invitae_summary_df, "Phenotype")
-            clinical_summary_df = extract_hpo_terms(clinical_summary_df, "Medical Prob description") # Error but fixed.
-            research_summary_df = extract_hpo_terms(research_summary_df, "Phenotype") # Error
-            atm_structured_df = extract_hpo_terms(atm_structured_df, "Phenotype")
+            clinical_summary_df = extract_hpo_terms(clinical_summary_df, "Medical Prob description")
+            research_summary_df = extract_hpo_terms(research_summary_df, "Phenotype")
+            #invitae_summary_df = extract_hpo_terms(invitae_summary_df, "Phenotype") # Does not contain phenotype column currently
+            #atm_structured_df = extract_hpo_terms(atm_structured_df, "Phenotype") # Does not contain phenotype column currently
 
             # Store imported dataframes in a dictionary
             dataframes = {

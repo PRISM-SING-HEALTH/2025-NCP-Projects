@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 
-def query(df: pd.DataFrame):
+
+
+def query(df):
     """
     Queries a DataFrame based on user input with case-insensitive comparison, 
     multi-word search, and autocomplete suggestions.

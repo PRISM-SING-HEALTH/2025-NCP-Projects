@@ -4,6 +4,7 @@ from variant.query import *
 from variant.validator import *
 from variant.streamlit_func import *
 from variant.standardise import *
+from variant.access import *
 
 
 
@@ -29,6 +30,21 @@ with tab1:
     # 1. CONFIGURATION FILE (YAML UPLOAD)
     # ------------------------------------
     config = load_yaml_configuration()
+
+    # --------------------------------------
+    # OPTIONAL FILE SYNC (SUBJECT TO REVIEW)
+    # --------------------------------------
+    if config:
+        base_path = config.get('base_path', "")
+        config_file_path = "C:/Users/lagah/Documents/dev/app/Mock_Local_Drive/config.yaml"
+    
+        st.subheader("📂 File Syncing Option")
+        enable_sync = st.checkbox("Sync files to the shared folder before loading data?", value=False)
+        
+        if enable_sync:
+            with st.spinner("Syncing files to shared folder..."):
+                sync_files_to_common_folder(config_file_path)
+            st.success("✅ File sync completed.")
 
     # -----------------------------------------
     # 2. NAVIGATION WITHIN VARIANT DATABASE TAB
@@ -152,7 +168,8 @@ with tab2:
 
 
 # ======================
-#  TAB 3: ABOUT SECTION
+#  TAB 3: ABOUT SECTION 
 # ======================
 with tab3:
     display_about_section()
+

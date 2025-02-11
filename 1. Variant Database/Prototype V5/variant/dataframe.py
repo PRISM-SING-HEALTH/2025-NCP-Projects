@@ -2,6 +2,8 @@ import re
 import pandas as pd
 import streamlit as st
 
+
+
 def convert_dataframes_to_string(dataframes):
     """
     Converts all values in the given DataFrames to strings.
@@ -19,49 +21,6 @@ def convert_dataframes_to_string(dataframes):
     if dataframes:
         return {key: df.astype(str) for key, df in dataframes.items()}
     return None
-
-def standardise_lab_cases(dataframes, standard_columns):
-    """
-    Standardises the Lab Cases dataset.
-
-    Parameters:
-    -----------
-    dataframes : dict
-        Dictionary containing all loaded DataFrames.
-    standard_columns : list
-        List of standard column names to retain.
-
-    Returns:
-    --------
-    pd.DataFrame
-        A standardized DataFrame for Lab Cases.
-    """
-    lab_cases_cols = {
-        'G4K Sample ID': 'MRN',
-        'Number variants detected': 'Var Count',
-        'Variant_Number': 'Var Number',
-        'gene': 'Gene',
-        'type': 'Type',
-        'zygosity': 'Zygosity',
-        'inheritance': 'Inheritance'
-    }
-
-    std_lab_cases_df = standardise_and_transform_lab_cases(dataframes["Lab Cases"])
-    std_lab_cases_df.rename(columns=lab_cases_cols, inplace=True)
-    std_lab_cases_df = std_lab_cases_df.loc[:, std_lab_cases_df.columns.intersection(standard_columns)]
-    std_lab_cases_df = std_lab_cases_df.reindex(columns=standard_columns)
-    remove_duplicate_phenotypes(std_lab_cases_df)
-    std_lab_cases_df = filter_invalid_variants(std_lab_cases_df)
-
-    return std_lab_cases_df
-
-
-
-
-
-
-
-
 
 
 
@@ -97,7 +56,6 @@ def standardise_dataframe(df, column_mapping, standard_columns):
 
 
 
-
 def remove_duplicate_phenotypes(df):
     """
     Removes duplicate phenotype entries for the same MRN.
@@ -126,6 +84,35 @@ def remove_duplicate_phenotypes(df):
     else:
         st.warning("The 'MRN' or 'Phenotype' column is missing in the dataframe.")
 
+
+
+def remove_duplicate_hpo_terms(df):
+    """
+    Removes duplicate HPO terms for the same MRN.
+
+    If multiple rows share the same MRN, only the first occurrence retains its 
+    HPO terms, while subsequent duplicates have their HPO terms set to an 
+    empty string.
+
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        The input DataFrame containing 'MRN' and 'HPO Terms' columns.
+
+    Returns:
+    --------
+    None
+        The function modifies the DataFrame in place.
+
+    Notes:
+    ------
+    - Assumes 'MRN' and 'HPO Terms' columns are present in the DataFrame.
+    - If either column is missing, a warning message is displayed using Streamlit.
+    """
+    if 'MRN' in df.columns and 'HPO Terms' in df.columns:
+        df.loc[df.duplicated(subset=['MRN'], keep='first'), 'HPO Terms'] = ""
+    else:
+        st.warning("The 'MRN' or 'HPO Terms' column is missing in the dataframe.")
 
 
 
@@ -163,7 +150,6 @@ def filter_invalid_variants(df):
         df = df[df['Var Number'] <= df['Var Count']]
 
     return df
-
 
 
 
@@ -235,7 +221,6 @@ def standardise_and_transform_lab_cases(df):
         df_pivot.drop(columns=['HGVSc'], inplace=True)  # Drop the original combined column
 
     return df_pivot
-
 
 
 
@@ -311,6 +296,7 @@ def standardise_and_transform_research(df):
                 'Patient Name': row['Patient Name'],
                 'Solved Status': row['Solved Status'],
                 'Phenotype': row['Phenotype'],
+                'HPO Terms': row.get('HPO Terms', ""),
                 'Var Number': i + 1,  # Dynamically assign variant number
                 'Gene': row[variant_columns[i]] if i < len(variant_columns) else None,
                 'Transcript': row[transcript_columns[i]] if i < len(transcript_columns) else None,
@@ -334,7 +320,6 @@ def standardise_and_transform_research(df):
         st.warning("The 'MRN' or 'Phenotype' column is missing in the dataframe.")
 
     return reshaped_df
-
 
 
 

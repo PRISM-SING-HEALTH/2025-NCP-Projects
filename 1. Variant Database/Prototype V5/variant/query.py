@@ -1,17 +1,17 @@
 import streamlit as st
 import pandas as pd
 
-
-
 def query(df: pd.DataFrame):
     """
-    Queries a DataFrame based on user input with case-insensitive comparison and multi-word search.
+    Queries a DataFrame based on user input with case-insensitive comparison, 
+    multi-word search, and autocomplete suggestions.
 
     Features:
     ---------
-    - Allows searching across multiple column fields (L2 query).
-    - Supports multi-word search (separate words with spaces).
+    - Allows searching across multiple column fields.
+    - Supports multi-word search.
     - Provides AND (match all words) and OR (match any word) filtering.
+    - Implements autocomplete suggestions based on available data.
     - Offers CSV download for filtered results.
 
     Parameters:
@@ -33,16 +33,25 @@ def query(df: pd.DataFrame):
         st.warning("Please select at least one column to search.")
         return df
 
-    # User inputs search terms (multiple words allowed)
-    search_input = st.text_input("Enter search terms (separate words with spaces)").strip()
+    # Extract unique values from selected columns for autocomplete
+    unique_values = set()
+    for col in selected_columns:
+        unique_values.update(df[col].dropna().astype(str).unique())
+
+    # Convert set to sorted list for better UI experience
+    unique_values = sorted(unique_values)
+
+    # Use autocomplete search input
+    search_input = st.multiselect(
+        "Enter search terms (start typing for suggestions):",
+        options=unique_values,
+        default=[]
+    )
 
     # If no search input, do nothing
     if not search_input:
         st.warning("Please enter at least one search term.")
         return df
-
-    # Split user input into multiple search words
-    search_terms = search_input.split()  # Splitting on spaces
 
     # Choose AND or OR logic
     filter_logic = st.radio("Select filter logic:", ["AND (Match All Words)", "OR (Match Any Word)"], horizontal=True)
@@ -52,14 +61,12 @@ def query(df: pd.DataFrame):
     # ===============================
     with st.spinner("Searching..."):
         if filter_logic == "AND (Match All Words)":
-            # Each row must contain all words in at least one selected column
             mask = df[selected_columns].apply(lambda row: all(
-                any(word.lower() in str(cell).lower() for cell in row) for word in search_terms
+                any(term.lower() in str(cell).lower() for cell in row) for term in search_input
             ), axis=1)
         else:
-            # Each row must contain at least one word in any selected column
             mask = df[selected_columns].apply(lambda row: any(
-                any(word.lower() in str(cell).lower() for cell in row) for word in search_terms
+                any(term.lower() in str(cell).lower() for cell in row) for term in search_input
             ), axis=1)
 
         # Apply the mask to filter the DataFrame
@@ -84,4 +91,3 @@ def query(df: pd.DataFrame):
         )
 
     return query_result
-

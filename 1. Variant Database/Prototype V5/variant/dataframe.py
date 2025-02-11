@@ -80,6 +80,7 @@ def remove_duplicate_phenotypes(df):
     - If either column is missing, a warning message is displayed using Streamlit.
     """
     if 'MRN' in df.columns and 'Phenotype' in df.columns:
+        df['Phenotype'] = df['Phenotype'].astype(str)  # Convert to string
         df.loc[df.duplicated(subset=['MRN'], keep='first'), 'Phenotype'] = ""
     else:
         st.warning("The 'MRN' or 'Phenotype' column is missing in the dataframe.")
@@ -110,7 +111,9 @@ def remove_duplicate_hpo_terms(df):
     - If either column is missing, a warning message is displayed using Streamlit.
     """
     if 'MRN' in df.columns and 'HPO Terms' in df.columns:
+        df['HPO Terms'] = df['HPO Terms'].astype(str)  # Convert to string
         df.loc[df.duplicated(subset=['MRN'], keep='first'), 'HPO Terms'] = ""
+
     else:
         st.warning("The 'MRN' or 'HPO Terms' column is missing in the dataframe.")
 

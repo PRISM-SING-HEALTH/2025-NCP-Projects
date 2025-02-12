@@ -189,58 +189,6 @@ def display_loaded_dataframes(dataframes):
 
 
 
-def load_uploaded_variant_file(uploaded_file):
-    """
-    Loads and validates the uploaded CSV file containing variant data.
-
-    Parameters:
-    -----------
-    uploaded_file : UploadedFile
-        The CSV file uploaded by the user.
-
-    Returns:
-    --------
-    pd.DataFrame or None
-        A DataFrame if the file is valid, otherwise None.
-    """
-    df = pd.read_csv(uploaded_file)
-
-    # Ensure required columns exist
-    required_columns = {'Transcript', 'Variant (HGVSc)'}
-    if not required_columns.issubset(df.columns):
-        st.error("❌ Uploaded file must contain 'Transcript' and 'Variant (HGVSc)' columns.")
-        return None
-
-    st.success("✅ File uploaded successfully!")
-    return df
-
-
-
-def validate_variants(df):
-    """
-    Validates variants using the Variant Validator API and displays results in Streamlit.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        DataFrame containing the 'HGVS (HGVSc)' column for validation.
-
-    Returns:
-    --------
-    None
-    """
-    if st.button("Validate Variants"):
-        with st.spinner("Validating variants..."):
-            results_df = test_variant_validator_batch(df['HGVS (HGVSc)'].tolist())
-
-        st.success("✅ Validation completed!")
-        st.dataframe(results_df)
-
-        # Provide CSV download option
-        csv_data = results_df.to_csv(index=False)
-        st.download_button("⬇️ Download Validation Results (CSV)", csv_data, "validation_results.csv", "text/csv")
-
-
 
 def upload_hpo_file():
     """

@@ -6,8 +6,6 @@ import requests
 # HELPER FUNCTIONS
 # ---------------
 
-import pandas as pd
-import requests
 
 def validate_base_gene(base_csv_path):
     """

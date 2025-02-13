@@ -189,7 +189,6 @@ def display_loaded_dataframes(dataframes):
 
 
 
-
 def upload_hpo_file():
     """
     Handles HPO Ontology file upload and saves it locally.

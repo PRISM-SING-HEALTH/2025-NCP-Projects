@@ -16,7 +16,7 @@ def standardise_lab_cases(dataframes, standard_columns):
     Returns:
     --------
     pd.DataFrame
-        A standardized DataFrame for Lab Cases.
+        A standardised DataFrame for Lab Cases.
     """
     lab_cases_cols = {
         'G4K Sample ID': 'MRN',

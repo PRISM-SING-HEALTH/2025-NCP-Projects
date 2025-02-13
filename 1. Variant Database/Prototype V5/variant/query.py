@@ -27,7 +27,7 @@ def query(df):
         The filtered DataFrame based on user queries.
     """
     # ========================================
-    # 🏷️ Step 1: Select Categories for Search
+    # Step 1: Select Categories for Search
     # ========================================
     selected_columns = st.multiselect("Select columns to search (multiple allowed)", df.columns)
 
@@ -43,7 +43,7 @@ def query(df):
     unique_values = sorted(unique_values)
 
     # =====================================================
-    # 🔎 Step 2: Let user freely type search terms (no auto)
+    # Step 2: Let user freely type search terms (no auto)
     # =====================================================
     free_text_input = st.text_input("Type your search term(s) (space or comma-separated):")
 
@@ -54,7 +54,7 @@ def query(df):
         typed_terms = [term.strip() for term in free_text_input.replace(',', ' ').split() if term.strip()]
 
     # ================================================================================
-    # 💡 Step 3: Let user pick from suggestions separately (NOT overriding free input)
+    # Step 3: Let user pick from suggestions separately (NOT overriding free input)
     # ================================================================================
     user_suggestions = st.multiselect(
         "Optional: pick any suggested search terms below (these do not overwrite your text input):",
@@ -73,7 +73,7 @@ def query(df):
     filter_logic = st.radio("Select filter logic:", ["AND (Match All Words)", "OR (Match Any Word)"], horizontal=True)
 
     # ===============================
-    # 🔍 Step 4: Perform the Search
+    # Step 4: Perform the Search
     # ===============================
     with st.spinner("Searching..."):
         # For each row, we check if the row matches (all/any) of the search_input terms
@@ -95,7 +95,7 @@ def query(df):
         query_result = df[mask]
 
     # =====================================
-    # 📊 Step 5: Display & Download Results
+    # Step 5: Display & Download Results
     # =====================================
     if query_result.empty:
         st.warning("No results found for your search.")

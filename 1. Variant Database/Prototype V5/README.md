@@ -31,7 +31,11 @@ For those who wish to modify or run the app from source, follow these steps.
    ```bash
    streamlit run app_main.py
    ```
-
+- Package application:
+   ```bash
+   pip install cx_Freeze
+   cxFreeze --script run.py
+   ```
 ## Usage
 ### Uploading Clinical Data
 1. Modify the *config.yaml* to the specific paths of the files you want to access.
@@ -64,4 +68,5 @@ To ensure the program is up-to-date, it is recommended to update the ontology ev
 
 The upload process may take several minutes to complete. Once the process is finished, a **hp.index** file will be generated and stored in the "output" folder of the program.
 
-FastHPOCR
+### FastHPOCR
+Please refer to [**FastHPOCR**](https://github.com/tudorgroza/fast_hpo_cr) for any new updates.

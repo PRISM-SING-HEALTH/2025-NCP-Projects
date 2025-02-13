@@ -22,6 +22,14 @@ The **PhenoVariant App** is a standalone Windows executable, requiring no additi
 For those who wish to modify or run the app from source, follow these steps.
 
 #### Requirements
+|Package Name|Description|Justification|Version for Python 3.11.7|
+|------------|-----------|-------------|-------------------------|
+|Streamlit|Framework for building interactive web applications with Python|Graphical user interface|1.13.0|
+|Altair|Declarative statistical visualisation library for Python|Dependancy for Streamlit|4.0.0|
+|Pronto|Library for working with ontologies in Python|Parsing, editing, and querying ontology formats like OBO|2.5.8|
+|OpenPyXL|Reading and writing Excel (.xlsx) files|Reading clinical excel files|3.1.5|
+|PyYAML|Allows Python applications to read, write, and manipulate YAML configuration files|File config management|6.0.2|
+
 - Python 3.11.7.
 - Install dependencies:
    ```bash
@@ -37,6 +45,10 @@ For those who wish to modify or run the app from source, follow these steps.
    cxFreeze --script run.py
    ```
 ## Usage
+
+### Video Demo
+A video demonstration is available [here](https://youtu.be/fOC2-GlDFKM).
+
 ### Uploading Clinical Data
 1. Modify the *config.yaml* to the specific paths of the files you want to access.
 2. Navigate to the "Configuration" side bar menu.
@@ -70,3 +82,20 @@ The upload process may take several minutes to complete. Once the process is fin
 
 ### FastHPOCR
 Please refer to [**FastHPOCR**](https://github.com/tudorgroza/fast_hpo_cr) for any new updates.
+
+### VariantValidator REST API
+The following [VariantValidator REST API](https://rest.variantvalidator.org/) are used in the program:
+- gene2transcripts_v2
+- variantvalidator
+
+## Configuration Guide
+1. Modify the **config.yaml** with the path locations of the desired folders you want to access.
+2. In **app_main.py**, modify **line34** with the path location of the **config.yaml** file.
+
+## Future Work
+### Offline VariantValidator Feature
+We focused on implementing the online feature before approaching an offline solution.
+**Starting points:**
+- [SeqRepo](https://github.com/biocommons/biocommons.seqrepo)
+- [ClinVar VCF](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/)
+- [VariantValidator Repo](https://github.com/openvar/variantValidator/blob/master/README.md)

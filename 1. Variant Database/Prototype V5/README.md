@@ -92,6 +92,20 @@ The following [VariantValidator REST API](https://rest.variantvalidator.org/) ar
 1. Modify the **config.yaml** with the path locations of the desired folders you want to access.
 2. In **app_main.py**, modify **line34** with the path location of the **config.yaml** file.
 
+### Test Environment
+Due to being unable to test on actual network laptops, we emulated the environment using the following directory structure:
+- Mock_Local_Drive
+  - PhenoVariant
+- Mock_Shared_Drive
+  - External_Drive
+    - Invitae_List
+  - Internal_Drive
+    - ATM_List
+    - Clinic_List
+    - Lab_Case_List
+  - Research_Drive
+    - Research_List
+
 ## Future Work
 ### Offline VariantValidator Feature
 We focused on implementing the online feature before approaching an offline solution.

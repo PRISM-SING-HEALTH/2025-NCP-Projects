@@ -6,51 +6,6 @@ from variant.streamlit_func import *
 from variant.standardise import *
 from variant.access import *
 
-##########################
-# Example Compare Function
-##########################
-def compare_all_base_and_comparison(base_df, comp_df):
-    """
-    Compare rows from base_df to comp_df. This matches row i in base_df
-    with row i in comp_df. Returns a new DataFrame with combined info:
-      - 'Gene', 'Reference'
-      - 'Transcript', 'Variant (HGVSc)', 'Gene Symbol'
-      - 'ComparisonResult'
-    """
-    results = []
-    max_len = max(len(base_df), len(comp_df))
-
-    for i in range(max_len):
-        # Get base info if row i exists
-        if i < len(base_df):
-            base_gene = base_df.loc[i, "Gene"] if "Gene" in base_df.columns else None
-            base_ref  = base_df.loc[i, "Reference"] if "Reference" in base_df.columns else None
-        else:
-            base_gene = None
-            base_ref  = None
-
-        # Get comparison info if row i exists
-        if i < len(comp_df):
-            transcript = comp_df.loc[i, "Transcript"] if "Transcript" in comp_df.columns else None
-            variant    = comp_df.loc[i, "Variant (HGVSc)"] if "Variant (HGVSc)" in comp_df.columns else None
-            comp_sym   = comp_df.loc[i, "Gene Symbol"] if "Gene Symbol" in comp_df.columns else None
-        else:
-            transcript = None
-            variant    = None
-            comp_sym   = None
-
-        comparison_msg = compare_base_and_comparison(base_ref, comp_sym)
-
-        results.append({
-            "Gene": base_gene,
-            "Reference": base_ref,
-            "Transcript": transcript,
-            "Variant (HGVSc)": variant,
-            "Gene Symbol": comp_sym,
-            "ComparisonResult": comparison_msg
-        })
-
-    return pd.DataFrame(results)
 
 
 ##########################
@@ -73,10 +28,10 @@ with tab1:
     # 1. CONFIGURATION FILE (YAML UPLOAD)
     config = load_yaml_configuration()
 
-    # 2. OPTIONAL FILE SYNC
+    # 2. OPTIONAL FILE SYNC (ACROSS DIFFERENT NETWORK FOLDERS)
     if config:
         base_path = config.get('base_path', "")
-        config_file_path = "C:/Users/lagah/Documents/dev/app/Mock_Local_Drive/config.yaml"
+        config_file_path = "C:/Users/lagah/Documents/dev/app/Mock_Local_Drive/config.yaml"  # Modify for actual network path
 
         st.subheader("📂 File Syncing Option")
         enable_sync = st.checkbox("Sync files to the shared folder before loading data?", value=False)
@@ -150,7 +105,7 @@ with tab1:
             )
 
             if single_file:
-                if st.button("Validate & Compare All Rows"):
+                if st.button("Validate Variants"):
                     with st.spinner("Validating & Comparing..."):
                         results_df = validate_both_in_one(single_file)
                     st.success("Validation complete!")

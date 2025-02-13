@@ -1,7 +1,8 @@
 # 2025 NCP Projects
 This repository holds 5 different projects, each designed to tackle a different healthcare-related problem using different technologies and approaches.
 
-## 1. Variant Database
+## 1. Automating Rare Disease Genetic Variant Curation and Management for International Data Sharing
+
 ### Overview
 A stand-alone Windows application for managing, querying, and validating genetic variant data using Python packaging.
 ### Key Features
